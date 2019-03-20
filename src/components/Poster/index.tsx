@@ -1,8 +1,8 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Canvas, Text } from '@tarojs/components'
+import posterConfig from './posterConfig'
 import './index.less'
-const wechat = window['wx']
 
 interface Poster {
   props: {}
@@ -11,7 +11,7 @@ interface Poster {
 class Poster extends Component {
   factor
   ctx
-  drawArr
+  drawArr = []
 
   state = {
     pxWidth: 0,
@@ -19,9 +19,10 @@ class Poster extends Component {
   }
 
   componentDidMount() {
-    const sysInfo = window['wx'].getSystemInfoSync()
+    const sysInfo = wx.getSystemInfoSync()
     const screenWidth = sysInfo.screenWidth
     this.factor = screenWidth / 750
+    this.create(posterConfig)
   }
 
   /**
@@ -421,8 +422,8 @@ class Poster extends Component {
    */
   _downImage(imageUrl) {
     return new Promise((resolve, reject) => {
-      if (/^http/.test(imageUrl) && !new RegExp(wechat.env.USER_DATA_PATH).test(imageUrl)) {
-        wechat.downloadFile({
+      if (/^http/.test(imageUrl) && !new RegExp(wx.env.USER_DATA_PATH).test(imageUrl)) {
+        wx.downloadFile({
           url: this._mapHttpToHttps(imageUrl),
           success: res => {
             if (res.statusCode === 200) {
@@ -449,7 +450,7 @@ class Poster extends Component {
    */
   _getImageInfo(imgPath, index) {
     return new Promise((resolve, reject) => {
-      wechat.getImageInfo({
+      wx.getImageInfo({
         src: imgPath,
         success(res) {
           resolve({ imgPath, imgInfo: res, index })
@@ -556,7 +557,7 @@ class Poster extends Component {
   }
 
   create(config) {
-    this.ctx = wechat.createCanvasContext('canvasid', this)
+    this.ctx = wx.createCanvasContext('canvasid', this)
 
     const height = this.getHeight(config)
     this.initCanvas(config.width, height, config.debug)
@@ -606,7 +607,7 @@ class Poster extends Component {
           }
         })
 
-        const res = wechat.getSystemInfoSync()
+        const res = wx.getSystemInfoSync()
         const platform = res.platform
         let time = 0
         if (platform === 'android') {
@@ -615,7 +616,7 @@ class Poster extends Component {
         }
         this.ctx.draw(false, () => {
           setTimeout(() => {
-            wechat.canvasToTempFilePath(
+            wx.canvasToTempFilePath(
               {
                 canvasId: 'canvasid',
                 success: res => {
@@ -633,7 +634,7 @@ class Poster extends Component {
         })
       })
       .catch(err => {
-        wechat.showToast({ icon: 'none', title: err.errMsg || '生成失败' })
+        wx.showToast({ icon: 'none', title: err.errMsg || '生成失败' })
         console.error(err)
       })
   }
@@ -645,8 +646,8 @@ class Poster extends Component {
           canvasId='canvasid'
           className="canvas"
           style={{
-            width: `${this.state.pxWidth}px`,
-            height: `${this.state.pxHeight}px`
+            width: `${500}px`,
+            height: `${500}px`
           }}
         />
       </View>
