@@ -1,12 +1,14 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Button } from '@tarojs/components'
 import posterConfig from './posterConfig'
+import Poster from '../../components/Poster'
 import './index.less'
 
 export default class Index extends Component {
   state = {
     posterConfig: posterConfig.jdConfig
   }
+
   onPosterSuccess = e => {
     const { detail } = e
     Taro.previewImage({
@@ -14,20 +16,22 @@ export default class Index extends Component {
       urls: [detail]
     })
   }
+
   onPosterFail = err => {
     console.error(err)
   }
+
   onCreatePoster = () => {
     this.setState({ posterConfig: posterConfig.demoConfig }, () => {
       // Poster.create(true) // 入参：true为抹掉重新生成
     })
   }
+
   onCreateOtherPoster = () => {
     this.setState({ posterConfig: posterConfig.jdConfig }, () => {
       // Poster1.create(true) // 入参：true为抹掉重新生成
     })
   }
-  config = {}
 
   render() {
     const { posterConfig } = this.state
@@ -43,8 +47,7 @@ export default class Index extends Component {
           onFail={this.onPosterFail}>
           <Button>生成海报</Button>
         </Poster> */}
-        <Button onClick={this.onCreatePoster}>异步生成海报一</Button>
-        <Button onClick={this.onCreateOtherPoster}>异步生成海报二</Button>
+        <Poster />
       </View>
     )
   }
