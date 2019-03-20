@@ -22,7 +22,7 @@ class Poster extends Component {
     const sysInfo = wx.getSystemInfoSync()
     const screenWidth = sysInfo.screenWidth
     this.factor = screenWidth / 750
-    this.create(posterConfig)
+    this.create(posterConfig.jdConfig)
   }
 
   /**
