@@ -8,8 +8,16 @@ interface Poster {
 }
 
 class Poster extends Component {
+  factor
+
+  componentDidMount() {
+    const sysInfo = window['wx'].getSystemInfoSync()
+    const screenWidth = sysInfo.screenWidth
+    this.factor = screenWidth / 750
+  }
+
   render() {
-    return <View className='Poster'></View>
+    return <View className='Poster' />
   }
 }
 
