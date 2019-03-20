@@ -1,3 +1,5 @@
+import help from "./help";
+
 export default {
   /**
    * 渲染块
@@ -179,9 +181,9 @@ export default {
     this.ctx.restore()
   },
   downloadResource(images = []) {
-    const drawList = []
+    const drawList: Promise<{}>[] = []
     this.drawArr = []
-    images.forEach((image, index) => drawList.push(this._downloadImageAndInfo(image, index)))
+    images.forEach((image, index) => drawList.push(help._downloadImageAndInfo(image, index)))
     return Promise.all(drawList)
   },
   initCanvas(w, h, debug) {
