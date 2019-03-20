@@ -1,12 +1,11 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Button } from '@tarojs/components'
-import posterConfig from './posterConfig'
 import Poster from '../../components/Poster'
 import './index.less'
 
 export default class Index extends Component {
   state = {
-    posterConfig: posterConfig.jdConfig
+    // posterConfig: posterConfig.jdConfig
   }
 
   onPosterSuccess = e => {
@@ -21,20 +20,20 @@ export default class Index extends Component {
     console.error(err)
   }
 
-  onCreatePoster = () => {
-    this.setState({ posterConfig: posterConfig.demoConfig }, () => {
-      // Poster.create(true) // 入参：true为抹掉重新生成
-    })
-  }
+  // onCreatePoster = () => {
+  //   this.setState({ posterConfig: posterConfig.demoConfig }, () => {
+  //     // Poster.create(true) // 入参：true为抹掉重新生成
+  //   })
+  // }
 
-  onCreateOtherPoster = () => {
-    this.setState({ posterConfig: posterConfig.jdConfig }, () => {
-      // Poster1.create(true) // 入参：true为抹掉重新生成
-    })
-  }
+  // onCreateOtherPoster = () => {
+  //   this.setState({ posterConfig: posterConfig.jdConfig }, () => {
+  //     // Poster1.create(true) // 入参：true为抹掉重新生成
+  //   })
+  // }
 
   render() {
-    const { posterConfig } = this.state
+    // const { posterConfig } = this.state
     return (
       <View>
         {/* index.wxml */}
